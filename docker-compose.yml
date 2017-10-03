@@ -1,0 +1,32 @@
+version: "3"
+services:
+  rabbitmq:
+    image: rabbitmq
+    ports:
+     - "4369:4369"
+     - "5671:5671"
+     - "5672:5672"
+     - "15672:15672"
+     - "25672:25672"
+  zipkin:
+    image: openzipkin/zipkin
+    ports:
+     - 9411:9411
+  spring-amqp-consumer:
+    image: jlo/spring-amqp-consumer
+    ports:
+     - "5005:5005"
+    links:
+     - rabbitmq:rabbitmq
+     - zipkin:zipkin
+    depends_on:
+     - rabbitmq
+  spring-amqp-producer:
+    image: jlo/spring-amqp-producer
+    ports:
+     - "8080:8080"
+    links:
+     - rabbitmq:rabbitmq
+     - zipkin:zipkin
+    depends_on:
+     - rabbitmq
