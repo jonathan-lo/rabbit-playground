@@ -12,10 +12,20 @@ buildscript {
 	}
 }
 
+plugins {
+	id 'com.palantir.docker' version "0.17.2"
+}
+
 apply plugin: 'java'
 apply plugin: 'eclipse'
 apply plugin: 'org.springframework.boot'
 apply plugin: 'io.spring.dependency-management'
+
+docker {
+	name 'jlo/spring-amqp-consumer'
+	files tasks.build.outputs
+	copySpec.from("build/libs")into("build/libs")
+}
 
 group = 'io.jlo'
 version = '0.0.1-SNAPSHOT'

@@ -12,6 +12,10 @@ buildscript {
 	}
 }
 
+plugins {
+	id 'com.palantir.docker' version "0.17.2"
+}
+
 apply plugin: 'java'
 apply plugin: 'eclipse'
 apply plugin: 'org.springframework.boot'
@@ -21,13 +25,18 @@ group = 'io.jlo'
 version = '0.0.1-SNAPSHOT'
 sourceCompatibility = 1.8
 
+docker {
+	name 'jlo/spring-amqp-producer'
+	files tasks.build.outputs
+	copySpec.from("build/libs")into("build/libs")
+}
+
 repositories {
 	mavenCentral()
 	mavenLocal()
 	maven { url "https://repo.spring.io/snapshot" }
 	maven { url "https://repo.spring.io/milestone" }
 }
-
 
 dependencies {
 	compile('org.springframework.boot:spring-boot-starter-actuator')
