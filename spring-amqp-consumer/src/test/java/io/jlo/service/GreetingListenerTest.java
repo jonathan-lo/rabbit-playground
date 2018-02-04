@@ -3,6 +3,7 @@ package io.jlo.service;
 import io.jlo.config.RabbitConfig;
 import org.junit.Before;
 import org.junit.ClassRule;
+import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.amqp.rabbit.core.RabbitTemplate;
@@ -29,6 +30,7 @@ import static org.mockito.Mockito.verify;
 )
 @RunWith(SpringRunner.class)
 @SpringBootTest
+@Ignore
 public class GreetingListenerTest {
 
     @Autowired
