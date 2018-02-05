@@ -1,0 +1,1 @@
+include 'spring-amqp-producer','spring-amqp-consumer'
