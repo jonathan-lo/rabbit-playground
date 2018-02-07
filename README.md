@@ -4,4 +4,4 @@ A simple toy project to experiment on spring amqp instrumentation
 
 ./gradlew build docker
 
-docker-compose up --scale spring-amqp-consumer=
+docker-compose up --scale spring-amqp-consumer=2
