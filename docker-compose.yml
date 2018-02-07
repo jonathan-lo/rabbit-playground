@@ -14,8 +14,6 @@ services:
      - 9411:9411
   spring-amqp-consumer:
     image: jlo/spring-amqp-consumer
-    ports:
-     - "5005:5005"
     links:
      - rabbitmq:rabbitmq
      - zipkin:zipkin

@@ -9,6 +9,7 @@ import org.springframework.amqp.rabbit.config.SimpleRabbitListenerContainerFacto
 import org.springframework.amqp.rabbit.connection.ConnectionFactory;
 import org.springframework.amqp.rabbit.core.RabbitAdmin;
 import org.springframework.amqp.rabbit.core.RabbitTemplate;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import zipkin2.reporter.AsyncReporter;
@@ -21,6 +22,9 @@ public class RabbitConfig {
 
   public static final String RABBIT_PLAYGROUND_EXCHANGE = "rabbit-playground-exchange";
 
+  @Value("${spring.application.name}")
+  private String applicationName;
+
   @Bean
   public Exchange exchange() {
     return ExchangeBuilder.fanoutExchange(RABBIT_PLAYGROUND_EXCHANGE).build();
@@ -28,7 +32,7 @@ public class RabbitConfig {
 
   @Bean
   public Queue greetingQueue() {
-    return new Queue("greetingQueue", true);
+    return new Queue("greeting-queue-" + applicationName, true);
   }
 
   @Bean
@@ -71,7 +75,7 @@ public class RabbitConfig {
   @Bean
   public Tracing tracing(Reporter<zipkin2.Span> reporter) {
     return Tracing.newBuilder()
-        .localServiceName("spring-amqp-consumer")
+        .localServiceName(applicationName)
         .sampler(Sampler.ALWAYS_SAMPLE)
         .spanReporter(reporter)
         .build();
